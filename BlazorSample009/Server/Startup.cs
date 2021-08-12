@@ -1,3 +1,4 @@
+using BlazorSample009.Server.Servicies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,8 @@ namespace BlazorSample009.Server
             {
                 option.UseNpgsql(Configuration.GetConnectionString("DataContext"));
             });
+
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
