@@ -36,12 +36,12 @@ namespace BlazorSample009.Server
 
             });
 
-            
-            //modelBuilder.Entity<Product>().HasData(
-            //    new Product(){ Id = "001", Name = "Book", Price = 1000 },
-            //    new Product() { Id = "002", Name = "Pen", Price = 500 },
-            //    new Product() { Id = "003", Name = "Laptop", Price = 30000 }
-            //    );
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product() { Id = "001", Name = "Book", Price = 1000 },
+                new Product() { Id = "002", Name = "Pen", Price = 500 },
+                new Product() { Id = "003", Name = "Laptop", Price = 30000 }
+                );
 
             base.OnModelCreating(modelBuilder);
         }
