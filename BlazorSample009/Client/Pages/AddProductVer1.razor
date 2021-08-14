@@ -1,0 +1,51 @@
+﻿@page "/Productlist/Ad2d"
+@using BlazorSample009.Client.Services
+@using BlazorSample009.Shared;
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+
+<h2>Add Product</h2>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Id" class="control-label">Id</label>
+                <input form="Id" class="form-control" @bind="@product.Id" />
+            </div>
+            <div class="form-group">
+                <label for="Name" class="control-label">Name</label>
+                <input form="Name" class="form-control" @bind="@product.Name" />
+            </div>
+            <div class="form-group">
+                <label for="Price" class="control-label">Price</label>
+                <input form="Price" class="form-control" @bind="@product.Price" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateProduct" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@code
+{
+    Product product = new Product();
+    protected async void CreateProduct()
+    {
+        await ProductService.AddProduct(product);
+        NavigationManager.NavigateTo("productlist");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("productlist");
+    }
+}

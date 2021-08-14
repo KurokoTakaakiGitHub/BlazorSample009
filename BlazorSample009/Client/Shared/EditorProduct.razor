@@ -1,0 +1,63 @@
+﻿@using BlazorSample009.Client.Services
+@using BlazorSample009.Shared;
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+
+<EditForm Model="@product" OnValidSubmit="@(() => Mode == ProductEditMode.New ? AddProduct() : UpdateProduct())">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label>Id</label>
+        <InputText class="form-control" @bind-Value="@product.Id" />
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <InputTextArea class="form-control" @bind-Value="@product.Name" />
+    </div>
+    <div class="form-group">
+        <label for="Price" class="control-label">Price</label>
+        <input form="Price" class="form-control" @bind="@product.Price" />
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" value="Save" />
+            <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public ProductEditMode Mode { get; set; }
+
+    [Parameter]
+
+    public string Id { get; set; }
+
+    private Product product = new Product();
+
+    private async Task UpdateProduct()
+    {
+        await ProductService.UpdateProduct(Id, product);
+        NavigationManager.NavigateTo($"productlist");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //if (Mode == ProductEditMode.Edit)
+        //{
+        //    product = await PublicArticleService.Get(Id);
+        //}
+    }
+
+    protected async Task AddProduct()
+    {
+        await ProductService.AddProduct(product);
+        NavigationManager.NavigateTo($"productlist");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo($"productlist");
+    }
+}

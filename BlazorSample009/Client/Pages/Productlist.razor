@@ -2,6 +2,14 @@
 @using BlazorSample009.Client.Services
 @using BlazorSample009.Shared;
 @inject IProductService ProductService
+@inject IJSRuntime js
+
+<h1></h1>
+<!--- Add S--->
+<a class="btn btn-secondary" href="/product/new">Add New</a>
+<!--- Add E--->
+
+<h1></h1>
 
 @if (products == null)
 {
@@ -9,32 +17,49 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>名称</td>
+            <td>価格</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in products)
+        {
             <tr>
-                <td>ID</td>
-                <td>名称</td>
-                <td>価格</td>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    <!--- Add S--->
+                    <a class="btn btn-success" href="/product/edit/@product.Id">Edit</a>
+                    <button class="btn btn-danger" @onclick="@(() => Delete(product.Id))">Delete</button>
+                    <!--- Add E--->
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in products)
-            {
-                <tr>
-                    <td>@p.Id</td>
-                    <td>@p.Name</td>
-                    <td>@p.Price</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 }
 
-@code{
+@code
+{
     private List<Product> products;
 
     protected override async Task OnInitializedAsync()
     {
         products = await ProductService.GetAllProducts();
+    }
+
+    private async Task Delete(string id)
+    {
+        var product = products.First(x => x.Id == id);
+        if (await js.InvokeAsync<bool>("confirm", $"{product.Name} ({product.Id}) 削除してもよろしいでしょうか？"))
+        {
+            await ProductService.DeleteProduct(id);
+            await OnInitializedAsync();
+        }
     }
 }
