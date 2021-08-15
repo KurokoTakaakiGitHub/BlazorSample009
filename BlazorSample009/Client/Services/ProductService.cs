@@ -17,6 +17,12 @@ namespace BlazorSample009.Client.Services
         Task<List<Product>> GetAllProducts();
 
         /// <summary>
+        /// 製品取得
+        /// </summary>
+        /// <returns></returns>
+        Task<Product> GetProduct(string id);
+
+        /// <summary>
         /// 製品追加
         /// </summary>
         /// <param name="product"></param>
@@ -58,6 +64,15 @@ namespace BlazorSample009.Client.Services
         public async Task<List<Product>> GetAllProducts()
         {
             return await _http.GetFromJsonAsync<List<Product>>($"api/Product");
+        }
+
+        /// <summary>
+        /// 製品取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Product> GetProduct(string id)
+        {
+            return await _http.GetFromJsonAsync<Product>($"api/Product/{id}");
         }
 
         /// <summary>

@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <input type="button" class="btn btn-primary" value="Save" />
+            <input type="submit" class="btn btn-primary" value="Save" />
             <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
         </div>
     </div>
@@ -44,10 +44,10 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        //if (Mode == ProductEditMode.Edit)
-        //{
-        //    product = await PublicArticleService.Get(Id);
-        //}
+        if (Mode == ProductEditMode.Edit)
+        {
+            product = await ProductService.GetProduct(Id);
+        }
     }
 
     protected async Task AddProduct()

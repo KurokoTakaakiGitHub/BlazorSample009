@@ -38,6 +38,16 @@ namespace BlazorApp.Server.Controllers
         }
 
         /// <summary>
+        /// 製品取得
+        /// </summary>
+        /// <returns>製品</returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(string id)
+        {
+            return Ok(await _productService.GetProduct(id));
+        }
+
+        /// <summary>
         /// 製品追加
         /// </summary>
         /// <param name="product"></param>

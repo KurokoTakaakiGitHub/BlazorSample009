@@ -15,6 +15,12 @@ namespace BlazorSample009.Server.Servicies
         /// <returns>製品</returns>
         Task<List<Product>> GetAllProducts();
 
+        ///// <summary>
+        ///// 製品取得
+        ///// </summary>
+        ///// <returns>製品</returns>
+        Task<Product> GetProduct(string id);
+
         /// <summary>
         /// 追加
         /// </summary>
@@ -55,7 +61,7 @@ namespace BlazorSample009.Server.Servicies
         }
 
         /// <summary>
-        /// 製品取得
+        /// 製品全取得
         /// </summary>
         /// <returns></returns>
         public async Task<List<Product>> GetAllProducts()
@@ -63,6 +69,18 @@ namespace BlazorSample009.Server.Servicies
             using (_context)
             {
                 return await _context.Products.ToListAsync();
+            }
+        }
+
+        /// <summary>
+        /// 製品取得
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Product> GetProduct(string id)
+        {
+            using (_context)
+            {
+                return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
             }
         }
 

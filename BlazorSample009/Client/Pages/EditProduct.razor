@@ -1,9 +1,11 @@
-﻿@page "/product/edit/{id:int}"
+﻿@page "/product/edit/{id}"
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
-<EditorProduct Mode=ProductEditMode.Edit />
+<EditorProduct Mode=ProductEditMode.Edit Id=@Id/>
 
 @code
 {
+    [Parameter]
+    public string Id { get; set; }
 }
